@@ -1,3 +1,6 @@
+import re
+
+
 class Interp_text:
     def init(str):
         self.str_to_parse = str
@@ -12,9 +15,12 @@ class Interp_text:
             print item
         return arr_str1
 
-
+    def identify_array(self, str):
+        arr_index = str.index("[")
+        m = re.search("\[(.*[a-z]?)\]", str) #RE for sq brackets
+        return m.group(0)
 
 
 string = "(midi)->(osc)->(adsr)-<[{->(stereo1), {->(reverbsc)->(stereo2)}]"
 text_instance = Interp_text()
-print text_instance.parser(string)
+print text_instance.identify_array(string)
