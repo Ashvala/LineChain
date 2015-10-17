@@ -9,6 +9,13 @@ class LineChain:
         for ugens in arr_str:
             new_unit = ugens[1:-1]
             print new_unit
+            try:
+                var_index = new_unit.index(":")
+            except:
+                var_index = -1
+#            print var_index
+            if var_index != -1:
+                print new_unit[0:new_unit.index(":")]
         return arr_str
 
     def tokenize(self):
@@ -21,6 +28,6 @@ class LineChain:
         return m.group(0)
 
 
-str = "(osc:0.4,440)->(adsr:2,4,1,0.1)"
+str = "(osc:0.4,440)->(adsr:2,4,1,0.1)->(mono)"
 text_instance = LineChain(str)
 text_instance.parse()
