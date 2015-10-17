@@ -1,26 +1,26 @@
 import re
 
+class LineChain:
+    def __init__(self,str):
+        self.str = str
 
-class Interp_text:
-    def init(str):
-        self.str_to_parse = str
+    def parse(self):
+        arr_str = self.tokenize()
+        for ugens in arr_str:
+            new_unit = ugens[1:-1]
+            print new_unit
+        return arr_str
 
-    def parser(self,str):
-        arr_str = self.tokenize(str)
-        return str
-
-    def tokenize(self, str):
-        arr_str1 = str.split("->") #split signal chain direction
-        for item in arr_str1:
-            print item
+    def tokenize(self):
+        arr_str1 = self.str.split("->") #split signal chain direction
         return arr_str1
 
-    def identify_array(self, str):
-        arr_index = str.index("[")
-        m = re.search("\[(.*[a-z]?)\]", str) #RE for sq brackets
+    def identify_array(self):
+        arr_index = self.str.index("[")
+        m = re.search("\[(.*[a-z]?)\]", self.str) #RE for sq brackets
         return m.group(0)
 
 
-string = "(midi)->(osc)->(adsr)-<[{->(stereo1), {->(reverbsc)->(stereo2)}]"
-text_instance = Interp_text()
-print text_instance.identify_array(string)
+str = "(osc:0.4,440)->(adsr:2,4,1,0.1)"
+text_instance = LineChain(str)
+text_instance.parse()
