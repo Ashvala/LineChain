@@ -10,7 +10,7 @@ Simple signal chains as a single line.
 As an example, let's consider the string:
 
 ```
-(midi)->(osc)->(adsr)-<[{->(stereo1), {->(reverbsc)->(stereo2)}]
+(midi)->(osc)->(adsr)-<[{->(stereo1)}, {->(reverbsc)->(stereo2)}]
 
 ```
 The idea is that it breaks up the signal chain like this: 
