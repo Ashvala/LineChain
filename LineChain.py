@@ -1,5 +1,4 @@
 import re
-import csnd6
 
 class LineChain:
     csd_str = "aout="
@@ -61,17 +60,16 @@ class LineChain:
         if self.parseBool == False:
             self.parse()
 
-        orc_str = """
-        sr=44100
-        nchnls=1
-        ksmps=32
-        0dbfs=1.0
+        orc_str = """sr=44100
+nchnls=1
+ksmps=32
+0dbfs=1.0
 
-        instr 1
-        {0}
-        out aout
-        endin
-        """.format(csd_str)
+instr 1
+{0}
+out aout
+endin
+        """.format(self.csd_str)
         return orc_str
 
     def CSDOutStr(self): #Just the audio out string
@@ -79,9 +77,8 @@ class LineChain:
             self.parse()
         print self.CsoundOrcGen()
 
-
-
-
-str = "(osc:0.4,440,*)->(adsr:2,1,1,0.1)"
-LineChainInstance = LineChain(str)
-LineChainInstance.parse()
+if __name__ == "__main__":
+    str = "(osc:0.4,440,*)->(adsr:2,1,1,0.1)"
+    LineChainInstance = LineChain(str)
+    LineChainInstance.parse()
+    print LineChainInstance.CsoundOrcGen()
