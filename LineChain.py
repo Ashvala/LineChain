@@ -33,7 +33,6 @@ class LineChain:
             new_unit = ugens[1:-1]
             try:
                 var_index = new_unit.index(":")
-#               print new_unit[var_index+1:]
                 signal_func =  self.parse_vars(new_unit[var_index+1:])
                 if arr_str.index(ugens) == len(arr_str) -1:
                     self.csd_str +=self.ugens_handler(new_unit[0:var_index], new_unit[var_index+1:])
@@ -45,16 +44,43 @@ class LineChain:
             except:
                 var_index = -1
         self.parseBool = True
+        self.parse_arrays()
         return arr_str
 
     def tokenize(self):
         arr_str1 = self.str.split("->") #split signal chain direction
         return arr_str1
 
+    def check_array_item(self,token):
+        initial_parse_cond = False
+        if token[0:3] == "{->" and token[len(token)-1] == "}":
+            initial_parse_cond = True
+            return initial_parse_cond
+        else:
+            return initial_parse_cond
+
+    def parse_arr_item(self, item):
+        item_to_parse = item[1:-1]
+        print item_to_parse
+
+    def parse_arrays(self):
+        array_to_parse = self.identify_array()[1:-1].split(",")
+        try:
+            for token in array_to_parse:
+                token_parse = self.check_array_item(token.strip())
+                if token_parse == True:
+                    parse_arr_item(token.strip())
+            return array_to_parse
+        except:
+            return array_to_parse
+
     def identify_array(self):
         arr_index = self.str.index("[")
-        m = re.search("\[(.*[a-z]?)\]", self.str) #RE for sq brackets
-        return m.group(0)
+        try:
+            m = re.search("\[(.*[a-z]?)\]", self.str) #RE for sq brackets
+            return m.group(0)
+        except:
+            return 0
 
     def CsoundOrcGen(self): # Orchestra generator
         if self.parseBool == False:
@@ -78,7 +104,7 @@ endin
         print self.CsoundOrcGen()
 
 if __name__ == "__main__":
-    str = "(osc:0.4,440,*)->(adsr:2,1,1,0.1)"
+    str = "(osc:0.4,440,*)->(adsr:2,1,1,0.1)-<[{->stereo1}, {->stereo2}]"
     LineChainInstance = LineChain(str)
     LineChainInstance.parse()
     print LineChainInstance.CsoundOrcGen()
