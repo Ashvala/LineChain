@@ -4,8 +4,49 @@ Simple signal chains as a single line.
 
 ---
 
-## Syntax:
+## About:
 
+This is a simple language that transcompiles into a csound orchestra. 
+
+You can take Csound functional syntax examples such as: 
+
+```
+aout = oscili(0.4,440) * adsr(2,1,0.4,1)
+```
+and write it out as
+
+```
+(osc:0.4,440,*)->(adsr:2,1,0.4,1)
+```
+
+You can still use the interpolation function of the Csound functional syntax: 
+
+```
+(osc:adsr(2,1,0.4,1),440)
+```
+
+It currently compiles to Csound simply because I wanted a good starting point. This project might end up becoming the front-end to a more evolved version of [SimpleSynth](http://github.com/ashvala/SimpleSynth).
+
+---
+## Current TODO list: 
+
+- Figure out stereo output and arrays. 
+- Parse through unit generators better
+- Raise errors for parse errors and so on
+- Fix some clunky code!
+- Try figuring out the syntax a little more.
+
+---
+
+## Contribute: 
+
+Put in a pull request. Thanks! 
+
+---
+
+## Syntax: 
+
+####Warning: Language is still in development, this is all subject to change. 
 
 As an example, let's consider the string:
 
