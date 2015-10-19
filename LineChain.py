@@ -68,10 +68,10 @@ class LineChain:
         0dbfs=1.0
 
         instr 1
-        %s
+        {0}
         out aout
         endin
-        """ % self.csd_str
+        """.format(csd_str)
         return orc_str
 
     def CSDOutStr(self): #Just the audio out string
