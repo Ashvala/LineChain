@@ -3,12 +3,13 @@ import csnd6
 
 class LineChain:
     csd_str = "aout="
+    parseBool = False
     def __init__(self,str):
         self.str = str
 
     def ugens_handler(self, str, vars):
         if str == "osc":
-            return "oscili(%s)" %vars
+            return "oscili({0})".format(vars)
         else:
             return "{0}({1})".format(str, vars)
 
@@ -24,7 +25,7 @@ class LineChain:
                     self.csd_str +=self.ugens_handler(new_unit[0:var_index], new_unit[var_index+1:]) + "+"
             except:
                 var_index = -1
-
+        self.parseBool = True
         return arr_str
 
     def tokenize(self):
@@ -37,22 +38,26 @@ class LineChain:
         return m.group(0)
 
     def CsoundOrcGen(self): # Orchestra generator
-        self.parse()
-        orc_str = '''
-sr=44100
-nchnls=1
-ksmps=32
-0dbfs=1.0
+        if self.parseBool == False:
+            self.parse()
 
-instr 1
-{0}
-out aout
-endin
-'''.format(self.csd_str)
+        orc_str = '''
+        sr=44100
+        nchnls=1
+        ksmps=32
+        0dbfs=1.0
+
+        instr 1
+        {0}
+        out aout
+        endin
+        '''.format(self.csd_str)
+        print orc_str
         return orc_str
 
     def CSDOutStr(self): #Just the audio out string
-        self.parse()
+        if self.parseBool == False:
+            self.parse()
         print self.CsoundOrcGen()
 
     def CsoundExec(self): # Execute Csound
@@ -62,10 +67,8 @@ endin
         score = "i 1 0 4"
         c.ReadScore(score)
         c.Start()
-        while(c.PerformKsmps == 0):
-            pass
-        c.Stop()
 
-str = "(osc:0.4,440)->(adsr:2,4,1,0.1)"
+str = "(osc:0.4,440)->(adsr:2,1,1,0.1)"
 text_instance = LineChain(str)
+#text_instance.CSDOutStr()
 text_instance.CsoundExec()
