@@ -43,11 +43,22 @@ class LineChain:
                         self.csd_str +=self.ugens_handler(new_unit[0:var_index], new_unit[var_index+1:]) + "+" # default behavior
             except:
                 var_index = -1
-        self.parseBool = True
+#        self.parseBool = True
         self.parse_arrays()
         return arr_str
 
     def tokenize(self):
+        splitable = False
+        try:
+            print self.str.index("-<")
+            print self.check_array(self.str)
+            print "new_arr"
+            splitable = True
+            new_splits = self.str.split("-<")
+            print new_splits
+        except:
+            print "no array"
+
         arr_str1 = self.str.split("->") #split signal chain direction
         return arr_str1
 
@@ -61,6 +72,11 @@ class LineChain:
 
     def parse_arr_item(self, item):
         item_to_parse = item[1:-1]
+        if item_to_parse[0:2] != "->":
+            print "Oh, incorrect input syntax!"
+        else:
+            parse_items = item.split("->")
+            self.parse(item)
         print item_to_parse
 
     def parse_arrays(self):
@@ -69,7 +85,7 @@ class LineChain:
             for token in array_to_parse:
                 token_parse = self.check_array_item(token.strip())
                 if token_parse == True:
-                    parse_arr_item(token.strip())
+                    self.parse_arr_item(token.strip())
             return array_to_parse
         except:
             return array_to_parse
@@ -103,8 +119,11 @@ endin
             self.parse()
         print self.CsoundOrcGen()
 
+
 if __name__ == "__main__":
-    str = "(osc:0.4,440,*)->(adsr:2,1,1,0.1)-<[{->stereo1}, {->stereo2}]"
+    str = "(osc:0.4,440,*)->(adsr:2,1,1,0.1)-<[{->(stereo1)}, {->(stereo2)}]"
+    print str
     LineChainInstance = LineChain(str)
-    LineChainInstance.parse()
-    print LineChainInstance.CsoundOrcGen()
+    print LineChainInstance.parse()
+    print LineChainInstance.csd_str
+    #    print LineChainInstance.CsoundOrcGen()
