@@ -6,14 +6,16 @@ jlist = [
         "args": "float,float",
         "args_count": 2,
         "args_list": "amp, freq",
-        "unit_desc": "A typical oscillator"
+        "unit_desc": "A typical oscillator",
+        "default_args": [0.5, 440]
     },
     {
         "name": "adsr",
         "args": "float,float,float,float",
         "args_count": 4,
         "args_list": "attack,decay,sustain,release",
-        "unit_desc": "Standard ADSR"
+        "unit_desc": "Standard ADSR",
+        "default_args": [0.4, 4, 0.6, 1]
     },
     {
         "name": "stereo1",

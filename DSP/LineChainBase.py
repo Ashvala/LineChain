@@ -46,7 +46,7 @@ class LineChain:
             arr = item.split(":")
             if len(arr) == 2:
                 parse_ugens(arr[0])
-                print parse_args(parse_tree, arr[1])
+                print parse_args(parse_tree, arr[0],arr[1])
         print parse_tree
         return parse_tree
 
