@@ -19,25 +19,19 @@ def oscil(ampl, freq, func, file):
   sin_wave_move = 1
   amp = ampl * 32767
   sines = []
-  '''
-  sines = []
-  for y in new_list:
-    for x in range(size):
-      print sin(pi*y*(x/frate))
-  sines.append(sin(pi*y*(x/frate)))
-  '''
+
   if func == "sine":
-    sin_list = [trig(sin, 1, freq)]
-    sines = calc(1,size, 10, sin_list)
+    sin_list = [trig(sin, 1, 1)]
+    sines = calc(1,size,sin_list)
   if func == "square":
-    sq_list = [trig(my_sin,(4.0/pi)/(n), freq) for n in range(1,1000,2)] #square
-    sines = calc(1,size, 10, sq_list)
+    sq_list = [trig(my_sin,(4.0/pi)/(n), n) for n in range(1,1000,2)] #square
+    sines = calc(1,size, sq_list)
   if func == "sawtooth":
-    t_list = [trig(my_sin,(2.0/pi)/(n), freq) for n in range(1,3)] #saw
-    sines = calc(1,size, 10, t_list)
+    t_list = [trig(my_sin,(2.0/pi)/(n), n) for n in range(1,1000)] #saw
+    sines = calc(1,size,t_list)
   if func == "funky":
-    s_list = [trig(sin,(2.0/pi)/log((n*n)+1), freq) for n in range(1,1000)] #rounder
-    sines = calc(1,size, 10, s_list)
+    s_list = [trig(sin,(2.0/pi)/log((n*n)+1), n) for n in range(1,100)] #rounder
+    sines = calc(1,size,s_list)
 
   wav_file = wave.open(file, "w")
   nchannels = 1
@@ -49,9 +43,7 @@ def oscil(ampl, freq, func, file):
       wav_file.writeframes(struct.pack('h', int(s*amp)))
   wav_file.close()
 
-def calc(increment_val, end,highlight, func_list):
-  x_scale = 1.5
-  y_scale = 200
+def calc(increment_val,end,func_list):
   i = 0
   arr = []
   while (i <= end):
@@ -63,9 +55,7 @@ def calc(increment_val, end,highlight, func_list):
 if __name__ == "__main__":
     print "generating a sinewave"
     fname = "t1.wav"
-    t_list = [trig(my_sin,(2.0/pi)/(n), n) for n in range(1,3)] #saw
-    calc(1,720, 10 ,t_list) #Triangle wave fourier series expansion
-    oscil(0.5, 440,"sine", fname)
+    oscil(0.5, 440,"sawtooth", fname)
     CHUNK = 1024
     wf = wave.open(fname, 'rb')
     p = pyaudio.PyAudio()
