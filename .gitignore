@@ -55,3 +55,6 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# test code that I use, that no one should ever see.
+test_code/
