@@ -29,9 +29,9 @@ def oscil(ampl, freq, func, file):
   if func == "sawtooth":
     t_list = [trig(my_sin,(2.0/pi)/(n), n) for n in range(1,1000)] #saw
     sines = calc(1,size,t_list)
-  if func == "funky":
-    s_list = [trig(sin,(2.0/pi)/log((n*n)+1), n) for n in range(1,100)] #rounder
-    sines = calc(1,size,s_list)
+#  if func == "funky":
+#    s_list = [trig(sin,(2.0/pi)/log((n*n)+1), n) for n in range(1,100)] #rounder
+#    sines = calc(1,size,s_list)
 
   wav_file = wave.open(file, "w")
   nchannels = 1
@@ -53,9 +53,9 @@ def calc(increment_val,end,func_list):
   return arr
 
 if __name__ == "__main__":
-    print "generating a sinewave"
     fname = "t1.wav"
     oscil(0.5, 440,"sawtooth", fname)
+    print "initalizing playback"
     CHUNK = 1024
     wf = wave.open(fname, 'rb')
     p = pyaudio.PyAudio()
@@ -71,5 +71,5 @@ if __name__ == "__main__":
 
     stream.stop_stream()
     stream.close()
-
+    print "playback terminated"
     p.terminate()
