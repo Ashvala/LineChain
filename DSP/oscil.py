@@ -6,7 +6,7 @@ import math
 
 def oscil(ampl, freq, file):
   size = 44100
-  frate = 11025.0
+  frate = 22050.0
   new_list = [freq]
   sin_wave_move = 1
   amp = ampl * 32767
