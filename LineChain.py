@@ -60,15 +60,15 @@ class LineChain:
         if self.parseBool == False:
             self.parse()
 
-        orc_str = """sr=44100
-nchnls=1
-ksmps=32
-0dbfs=1.0
+            orc_str = """sr=44100
+            nchnls=1
+            ksmps=32
+            0dbfs=1.0
 
-instr 1
-{0}
-out aout
-endin
+            instr 1
+            {0}
+            out aout
+            endin
         """.format(self.csd_str)
         return orc_str
 
