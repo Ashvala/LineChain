@@ -56,5 +56,6 @@ docs/_build/
 # PyBuilder
 target/
 
-# test code that I use, that no one should ever see.
+# test code that I use, that no one should ever see. Everything I want to remove goes here.
 test_code/
+t1.wav
