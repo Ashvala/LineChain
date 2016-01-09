@@ -59,6 +59,10 @@ if __name__ == "__main__":
     CHUNK = 1024
     wf = wave.open(fname, 'rb')
     p = pyaudio.PyAudio()
+#    calc funky regardless:
+    s_list = [trig(sin,(2.0/pi)/log((n*n)+1), n) for n in range(1,100)] #rounder
+    print calc(1,720,s_list)
+
     stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
                     channels=wf.getnchannels(),
                     rate=wf.getframerate(),
